@@ -1,0 +1,1703 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=yes">
+ <meta name="robots" content="noindex, nofollow">
+<title>🎨 syanze's Atelier - Chromatic Transmutation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+--magic-glow-color:173,189,204;
+--magic-glow-complement:82,66,51;
+--diamond-color:#FD0100;
+--diamond-color-rgb:253,1,0;
+--diamond-light:#FF807F;
+--diamond-dark:#9D0000;
+--diamond-shadow:#600000;
+--diamond-tip:#9AA1AD;
+--page-side:clamp(14px,3.4vw,38px);
+--content-width:min(820px,calc(100% - 28px));
+--box-padding:clamp(10px,1.8vw,18px);
+--mobile-content-inset:clamp(11px,3.2vw,14px);
+--result-text-shift:8ch;
+--suncatcher-left-anchor:24px;
+--suncatcher-right-anchor:calc(100% - 24px);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{
+margin:0;
+width:100%;
+min-height:100%;
+overflow-x:auto;
+overflow-y:auto;
+overflow-anchor:none;
+-webkit-text-size-adjust:100%;
+text-size-adjust:100%;
+touch-action:pan-x pan-y pinch-zoom;
+}
+body{
+margin:0;
+width:100%;
+min-width:0;
+min-height:100vh;
+padding:var(--page-side);
+padding-left:max(var(--page-side),env(safe-area-inset-left));
+padding-right:max(var(--page-side),env(safe-area-inset-right));
+background:#fffdf8;
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+color:#333;
+position:relative;
+z-index:0;
+overflow-x:visible;
+overflow-y:visible;
+overflow-anchor:none;
+touch-action:pan-x pan-y pinch-zoom;
+}
+body::before{
+content:"";
+position:fixed;
+z-index:-2;
+pointer-events:none;
+inset:0;
+border-left:var(--page-side) solid transparent;
+border-right:var(--page-side) solid transparent;
+background:linear-gradient(135deg,#eee4d0 0%,#cdbb99 18%,#e7dac1 35%,#bda985 50%,#e9dec9 68%,#c4b08b 82%,#eee4d0 100%) border-box;
+box-shadow:
+inset 2px 0 0 #a48b65,
+inset -2px 0 0 #a48b65,
+inset 6px 0 0 #f1e7d4,
+inset -6px 0 0 #f1e7d4,
+inset 9px 0 0 #bba47d,
+inset -9px 0 0 #bba47d,
+inset 18px 0 18px 12px rgba(91,68,38,.32),
+inset -18px 0 18px 12px rgba(91,68,38,.32),
+0 0 0 1px #8e7654,
+0 0 25px rgba(60,43,20,.28);
+}
+body::after{
+content:"";
+position:fixed;
+z-index:-1;
+pointer-events:none;
+top:var(--page-side);
+bottom:var(--page-side);
+left:var(--page-side);
+right:var(--page-side);
+border-left:3px double #aa8c5c;
+border-right:3px double #aa8c5c;
+box-shadow:
+inset 2px 0 0 rgba(248,238,215,.9),
+inset -2px 0 0 rgba(248,238,215,.9),
+inset 8px 0 8px rgba(90,65,30,.2),
+inset -8px 0 8px rgba(90,65,30,.2);
+}
+.ornament{
+position:fixed;
+z-index:100;
+width:clamp(65px,7vw,101px);
+height:clamp(65px,7vw,101px);
+pointer-events:none;
+isolation:isolate;
+}
+.ornament svg{width:100%;height:100%;display:block;overflow:visible}
+.ornament.tl{top:-15px;left:0}
+.ornament.tr{top:-15px;right:0;transform:scaleX(-1)}
+.ornament.bl{bottom:-15px;left:0;transform:scaleY(-1)}
+.ornament.br{right:0;bottom:-15px;transform:scale(-1)}
+.ornament-main,.ornament-secondary{font-family:Georgia,serif}
+.content{
+position:relative;
+z-index:2;
+width:var(--content-width);
+max-width:var(--content-width);
+min-width:0;
+min-height:calc(100vh - (var(--page-side)*2));
+margin:0 auto;
+padding:0;
+}
+.content>.box,.title-plate{position:relative;z-index:2}
+h1{
+color:#2c3e50;
+font-size:clamp(1rem,2.5vw,1.6rem);
+text-align:center;
+margin:0 0 5px;
+white-space:nowrap;
+}
+.subtitle{
+text-align:center;
+color:#7f8c8d;
+font-size:clamp(.7rem,1.7vw,1.1rem);
+margin-bottom:25px;
+white-space:nowrap;
+}
+.title-plate{
+display:flex;
+align-items:center;
+justify-content:center;
+width:fit-content;
+max-width:100%;
+margin:0 auto 16px;
+padding:8px clamp(10px,2.2vw,18px);
+background:linear-gradient(180deg,#b8b8b8 0%,#d0d0d0 16%,#e0e0e0 32%,#E7E7E7 42%,#fff 50%,#E7E7E7 58%,#e0e0e0 68%,#d0d0d0 84%,#b8b8b8 100%);
+border:1px solid #aaa;
+border-radius:8px;
+box-shadow:inset 0 1px 0 rgba(255,255,255,.95),inset 0 -1px 0 rgba(120,120,120,.3),0 3px 8px rgba(0,0,0,.18);
+}
+.title-copy{
+min-width:0;
+width:max-content;
+max-width:100%;
+}
+.title-plate h1{
+margin:0 0 3px;
+font-size:clamp(.9rem,3vw,1.6rem);
+}
+.title-plate .subtitle{
+margin:0;
+font-size:clamp(.68rem,2vw,1.1rem);
+}
+.box{
+width:100%;
+max-width:100%;
+min-width:0;
+background-color:#f4f0e6;
+background-image:
+radial-gradient(ellipse at 18% 25%,rgba(255,255,255,.48),transparent 38%),
+radial-gradient(ellipse at 82% 70%,rgba(190,175,150,.08),transparent 42%),
+radial-gradient(ellipse at 45% 90%,rgba(255,255,255,.35),transparent 35%);
+padding:var(--box-padding);
+border-radius:10px;
+box-shadow:0 4px 10px rgba(0,0,0,.05);
+margin-bottom:14px;
+font-family:"Klee One",serif;
+color:#202020;
+overflow:visible;
+}
+.box:first-of-type{
+background-color:#f8f7f2;
+background-image:linear-gradient(rgba(255,255,255,.30),rgba(255,255,255,.30)),url("https://images.unsplash.com/photo-1601662528567-526cd06f6582");
+background-size:cover;
+background-position:center;
+}
+.pencil{
+font-family:"Klee One",serif;
+font-size:15px;
+font-weight:600;
+line-height:1.2;
+color:#202020;
+letter-spacing:.2px;
+text-shadow:.25px 0 #202020,-.15px .1px rgba(32,32,32,.55),.1px -.15px rgba(32,32,32,.35);
+}
+.input-group{
+display:flex;
+gap:clamp(5px,1vw,8px);
+align-items:center;
+justify-content:center;
+flex-wrap:wrap;
+position:relative;
+z-index:5;
+width:100%;
+max-width:100%;
+min-width:0;
+}
+label{
+font-weight:bold;
+font-size:clamp(.82rem,1.5vw,1.15rem);
+white-space:nowrap;
+min-width:0;
+}
+input[type=number],input[type=text]{
+padding:8px;
+font-size:clamp(.9rem,1.4vw,1.1rem);
+width:clamp(68px,8vw,90px);
+min-width:0;
+border:1px solid #ccc;
+border-radius:6px;
+outline:none;
+text-align:center;
+font-family:"Klee One",serif;
+font-weight:600;
+color:#202020;
+letter-spacing:.2px;
+background:#F8F6F3;
+flex:0 1 clamp(68px,8vw,90px);
+position:relative;
+z-index:6;
+}
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+input[type=number]{-moz-appearance:textfield}
+input[type=text].error,input[type=number].error{border-color:#e00000;background:#fff2f2}
+button{
+padding:9px clamp(12px,1.8vw,18px);
+font-size:clamp(.82rem,1.4vw,1.05rem);
+background:#BCE1DF;
+color:#fff;
+border:0;
+border-radius:6px;
+cursor:pointer;
+transition:background-color .2s,transform .1s,box-shadow .1s;
+font-family:"Klee One",serif;
+font-weight:600;
+box-shadow:0 3px 0 #8fb8b6;
+white-space:nowrap;
+position:relative;
+z-index:6;
+touch-action:manipulation;
+}
+button:hover{background:#acd7d5}
+button:active{transform:translateY(2px) scale(.97);box-shadow:0 1px 0 #8fb8b6}
+.result-title-container{
+display:flex;
+align-items:center;
+gap:8px;
+font-size:clamp(.95rem,1.8vw,1.2rem);
+font-weight:bold;
+color:#202020;
+margin-bottom:8px;
+border-bottom:2px solid #eee;
+padding-top:0;
+padding-right:0;
+padding-bottom:6px;
+padding-left:var(--result-text-shift);
+position:relative;
+z-index:2;
+min-width:0;
+max-width:100%;
+}
+.result-title-container span{min-width:0}
+#diamond,#baseGemDiamond{
+width:1em;
+height:1em;
+display:inline-block;
+flex:0 0 1em;
+overflow:visible;
+vertical-align:middle;
+}
+#diamond{
+filter:drop-shadow(0 0 3px rgba(var(--diamond-color-rgb),.8)) drop-shadow(0 0 7px rgba(var(--diamond-color-rgb),.45));
+}
+#baseGemDiamond{filter:none}
+#diamondSvg,#baseGemDiamondSvg{
+width:100%;
+height:100%;
+display:block;
+overflow:visible;
+}
+.diamond-base{fill:var(--diamond-color);opacity:.90}
+.crown-light{fill:var(--diamond-light);opacity:.92}
+.crown-base{fill:var(--diamond-color);opacity:.72}
+.crown-dark{fill:var(--diamond-dark);opacity:.68}
+.crown-white{fill:var(--diamond-light);opacity:.36}
+.crown-soft{fill:#fff;opacity:.32}
+.crown-left-color{fill:var(--diamond-color);opacity:.82}
+.crown-center-soft{fill:var(--diamond-light);opacity:.58}
+.girdle-base{fill:var(--diamond-dark);opacity:.62}
+.pavilion-light{fill:var(--diamond-light);opacity:.7}
+.pavilion-base{fill:var(--diamond-color);opacity:.68}
+.pavilion-dark{fill:var(--diamond-dark);opacity:.70}
+.pavilion-shadow{fill:var(--diamond-shadow);opacity:.55}
+.pavilion-white{fill:var(--diamond-light);opacity:.20}
+.pavilion-tip{fill:var(--diamond-tip);opacity:.32}
+.result-base-gem-inline{
+display:inline-flex;
+align-items:center;
+gap:3px;
+margin:0 2px;
+font-family:"Klee One",serif;
+font-weight:600;
+color:#202020;
+line-height:1;
+vertical-align:middle;
+white-space:nowrap;
+}
+.result-base-gem-inline svg{width:1.1em;height:1.1em;display:block;flex:0 0 1.1em;overflow:visible}
+.result-area{
+white-space:pre-wrap;
+word-break:normal;
+overflow-wrap:anywhere;
+line-height:1.45;
+font-size:clamp(.72rem,1.22vw,1.05rem);
+letter-spacing:-.025em;
+color:#202020;
+background-color:#f4f0e6;
+background-image:
+radial-gradient(ellipse at 18% 25%,rgba(255,255,255,.48),transparent 38%),
+radial-gradient(ellipse at 82% 70%,rgba(190,175,150,.08),transparent 42%),
+radial-gradient(ellipse at 45% 90%,rgba(255,255,255,.35),transparent 35%);
+padding-top:10px;
+padding-right:10px;
+padding-bottom:10px;
+padding-left:10px;
+border-radius:6px;
+border:1px solid #eee;
+margin-bottom:10px;
+font-family:"Klee One",serif;
+font-weight:600;
+min-width:0;
+max-width:100%;
+width:100%;
+}
+.base-gem-inline{display:none}
+.base-gem-inline.active{display:none}
+.youtube-section{
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+margin-top:8px;
+background:transparent;
+width:100%;
+max-width:100%;
+min-width:0;
+}
+.video-container{
+position:relative;
+width:100%;
+max-width:440px;
+aspect-ratio:16/9;
+background:#111;
+border-radius:6px;
+overflow:hidden;
+}
+.video-placeholder{
+position:absolute;
+inset:0;
+background:#111 center/cover no-repeat;
+z-index:3;
+opacity:1;
+transition:opacity .7s ease;
+pointer-events:none;
+}
+.video-placeholder img{display:block;width:100%;height:100%;object-fit:cover}
+.video-container iframe{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+border:0;
+border-radius:6px;
+z-index:2;
+opacity:0;
+transition:opacity .15s linear;
+}
+.video-container iframe.ready{opacity:1}
+.video-placeholder.fade-out{opacity:0}
+.video-placeholder.hidden{display:none}
+</style>
+</head>
+<body>
+<div class="ornament tl">
+<svg viewBox="0 0 126 126" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="mainGoldTL" x1="100%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#C97B24"/><stop offset="18%" stop-color="#E29B1A"/><stop offset="35%" stop-color="#E9B83C"/><stop offset="52%" stop-color="#E4D34A"/><stop offset="68%" stop-color="#D2C83F"/><stop offset="83%" stop-color="#A8B63B"/><stop offset="100%" stop-color="#7F9A36"/></linearGradient>
+<linearGradient id="secondaryGoldTL" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#ECD23D"/><stop offset="52%" stop-color="#E8A530"/><stop offset="100%" stop-color="#DE960A"/></linearGradient>
+<filter id="shadowTL" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="1" dy="2" stdDeviation="2" flood-color="#7E460C" flood-opacity=".22"/></filter>
+</defs><g filter="url(#shadowTL)"><text x="2" y="82" font-size="97.2" fill="url(#mainGoldTL)" class="ornament-main">❧</text><text x="18" y="72" font-size="57.6" fill="url(#secondaryGoldTL)" class="ornament-secondary">❦</text></g>
+</svg>
+</div>
+<div class="ornament tr">
+<svg viewBox="0 0 126 126" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="mainGoldTR" x1="100%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#C97B24"/><stop offset="18%" stop-color="#E29B1A"/><stop offset="35%" stop-color="#E9B83C"/><stop offset="52%" stop-color="#E4D34A"/><stop offset="68%" stop-color="#D2C83F"/><stop offset="83%" stop-color="#A8B63B"/><stop offset="100%" stop-color="#7F9A36"/></linearGradient>
+<linearGradient id="secondaryGoldTR" x1="0%" y1="100%" x2="0%" y2="0%"><stop offset="0%" stop-color="#F5D94F"/><stop offset="55%" stop-color="#F0AF2F"/><stop offset="100%" stop-color="#E49D1D"/></linearGradient>
+<filter id="shadowTR" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="1" dy="2" stdDeviation="2" flood-color="#7E460C" flood-opacity=".22"/></filter>
+</defs><g filter="url(#shadowTR)"><text x="2" y="82" font-size="97.2" fill="url(#mainGoldTR)" class="ornament-main">❧</text><text x="18" y="72" font-size="57.6" fill="url(#secondaryGoldTR)" class="ornament-secondary">❦</text></g>
+</svg>
+</div>
+<div class="ornament bl">
+<svg viewBox="0 0 126 126" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="mainGoldBL" x1="100%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#C97B24"/><stop offset="18%" stop-color="#E29B1A"/><stop offset="35%" stop-color="#E9B83C"/><stop offset="52%" stop-color="#E4D34A"/><stop offset="68%" stop-color="#D2C83F"/><stop offset="83%" stop-color="#A8B63B"/><stop offset="100%" stop-color="#7F9A36"/></linearGradient>
+<linearGradient id="secondaryGoldBL" x1="0%" y1="100%" x2="0%" y2="0%"><stop offset="0%" stop-color="#F5D94F"/><stop offset="55%" stop-color="#F0AF2F"/><stop offset="100%" stop-color="#E49D1D"/></linearGradient>
+<filter id="shadowBL" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="1" dy="2" stdDeviation="2" flood-color="#7E460C" flood-opacity=".22"/></filter>
+</defs><g filter="url(#shadowBL)"><text x="2" y="82" font-size="97.2" fill="url(#mainGoldBL)" class="ornament-main">❧</text><text x="18" y="72" font-size="57.6" fill="url(#secondaryGoldBL)" class="ornament-secondary">❦</text></g>
+</svg>
+</div>
+<div class="ornament br">
+<svg viewBox="0 0 126 126" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="mainGoldBR" x1="100%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#C97B24"/><stop offset="18%" stop-color="#E29B1A"/><stop offset="35%" stop-color="#E9B83C"/><stop offset="52%" stop-color="#E4D34A"/><stop offset="68%" stop-color="#D2C83F"/><stop offset="83%" stop-color="#A8B63B"/><stop offset="100%" stop-color="#7F9A36"/></linearGradient>
+<linearGradient id="secondaryGoldBR" x1="0%" y1="100%" x2="0%" y2="0%"><stop offset="0%" stop-color="#F5D94F"/><stop offset="55%" stop-color="#F0AF2F"/><stop offset="100%" stop-color="#E49D1D"/></linearGradient>
+<filter id="shadowBR" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="1" dy="2" stdDeviation="2" flood-color="#7E460C" flood-opacity=".22"/></filter>
+</defs><g filter="url(#shadowBR)"><text x="2" y="82" font-size="97.2" fill="url(#mainGoldBR)" class="ornament-main">❧</text><text x="18" y="72" font-size="57.6" fill="url(#secondaryGoldBR)" class="ornament-secondary">❦</text></g>
+</svg>
+</div>
+<div class="content">
+<div class="title-plate">
+<div class="title-copy">
+<h1>🎨 syanze's Atelier</h1>
+<div class="subtitle">Chromatic Transmutation</div>
+</div>
+</div>
+<div class="box">
+<div class="input-group">
+<label for="targetColor">作りたい色番号 (1〜85):</label>
+<input type="text" id="targetColor" value="38" inputmode="numeric" pattern="[0-9]*" autocomplete="off">
+<button type="button" id="searchButton">Search</button>
+</div>
+</div>
+<div class="box">
+<div class="result-title-container">
+<div id="diamond">
+<svg id="diamondSvg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+<path class="diamond-base" d="M 2,44 C 7,34 14,25 24,17 L 76,17 C 86,25 93,34 98,44 C 92,50 85,55 78,59 L 50,98 L 22,59 C 15,55 8,50 2,44 Z"/>
+<path class="crown-light" d="M 2,44 C 8,34 15,25 24,17 L 37,30 L 30,46 L 15,46 Z"/>
+<path class="crown-light" d="M 24,17 L 50,17 L 50,29 L 37,30 Z"/>
+<path class="crown-white" d="M 24,17 L 50,17 L 50,29 L 37,30 Z"/>
+<path class="crown-left-color" d="M 2,44 C 8,34 15,25 24,17 L 37,30 L 30,46 L 15,46 Z"/>
+<path class="crown-light" d="M 50,17 L 76,17 L 63,30 L 50,29 Z"/>
+<path class="crown-dark" d="M 76,17 C 85,25 92,34 98,44 L 85,46 L 70,46 L 63,30 Z"/>
+<path class="crown-white" d="M 2,44 L 15,46 L 30,46 L 37,30 L 24,35 Z"/>
+<path class="crown-light" d="M 98,44 L 85,46 L 70,46 L 63,30 L 76,35 Z"/>
+<path class="crown-base" d="M 30,46 L 37,30 L 50,29 L 50,47 Z"/>
+<path class="crown-soft" d="M 37,30 L 50,29 L 50,47 L 30,46 Z"/>
+<path class="crown-center-soft" d="M 37,30 L 50,29 L 50,47 L 30,46 Z"/>
+<path class="crown-white" d="M 50,29 L 63,30 L 70,46 L 50,47 Z"/>
+<path class="crown-soft" d="M 50,29 L 63,30 L 70,46 L 50,47 Z"/>
+<path class="girdle-base" d="M 2,44 L 15,46 L 30,46 L 50,47 L 70,46 L 85,46 L 98,44 L 85,51 L 70,52 L 50,53 L 30,52 L 15,51 Z"/>
+<path class="crown-white" d="M 30,46 L 50,47 L 70,46 L 50,53 Z"/>
+<path class="pavilion-dark" d="M 2,44 L 15,51 L 22,59 L 50,98 L 28,69 L 12,55 Z"/>
+<path class="pavilion-light" d="M 15,51 L 30,52 L 42,88 L 50,98 L 22,59 Z"/>
+<path class="pavilion-dark" d="M 30,52 L 50,53 L 42,88 L 50,98 Z"/>
+<path class="pavilion-white" d="M 50,53 L 58,88 L 50,98 L 42,88 Z"/>
+<path class="pavilion-base" d="M 50,53 L 70,52 L 58,88 L 50,98 Z"/>
+<path class="pavilion-light" d="M 70,52 L 85,51 L 78,59 L 50,98 L 58,88 Z"/>
+<path class="pavilion-shadow" d="M 98,44 L 85,51 L 78,59 L 50,98 L 72,69 L 88,55 Z"/>
+<path class="pavilion-white" d="M 50,53 L 58,88 L 50,98 L 50,84 Z"/>
+<path class="pavilion-tip" d="M 42,88 L 50,98 L 58,88 L 50,91 Z"/>
+</svg>
+</div>
+<span>必要宝石とレシピ</span>
+</div>
+<div class="cauldron-container">
+<div id="magicParticles" class="magic-particles"></div>
+<div class="cauldron-wrapper">
+<div id="magicGlow" class="magic-glow"></div>
+<div id="sparkleEffect" class="sparkle-effect">
+<div class="sparkle-star s1"></div><div class="sparkle-dot s2"></div><div class="sparkle-star s3"></div><div class="sparkle-dot s4"></div><div class="sparkle-star s5"></div>
+<div class="sparkle-dot s6"></div><div class="sparkle-dot s7"></div><div class="sparkle-dot s8"></div><div class="sparkle-dot s9"></div><div class="sparkle-dot s10"></div>
+<div class="sparkle-star s11"></div><div class="sparkle-star s12"></div><div class="sparkle-dot s13"></div><div class="sparkle-star s14"></div><div class="sparkle-dot s15"></div>
+<div class="sparkle-star s16"></div><div class="sparkle-dot s17"></div><div class="sparkle-star s18"></div><div class="sparkle-dot s19"></div><div class="sparkle-dot s20"></div>
+</div>
+<div class="cauldron-rim">
+<div id="liquidSurface" class="liquid-surface"></div>
+<div id="bubbleContainer" class="bubble-container"></div>
+</div>
+<div class="cauldron-body"></div>
+</div>
+<div id="colorPreviewText" class="color-preview-text"></div>
+</div>
+<div id="baseGemInline" class="base-gem-inline">
+<div id="baseGemDiamond">
+<svg id="baseGemDiamondSvg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+<use href="#diamondSvg"></use>
+</svg>
+</div>
+<span class="base-gem-name"></span>
+</div>
+<div id="result" class="result-area"></div>
+<div class="youtube-section">
+<div class="video-container" id="youtubeContainer">
+<div class="video-placeholder" id="youtubePlaceholder">
+<img src="https://i.ytimg.com/vi/Y7aOkFx7sKw/hqdefault.jpg" alt="動画サムネイル">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="suncatchers" aria-hidden="true">
+<div class="suncatcher">
+<div class="chain" style="height:100px"></div>
+<div class="crystal"></div>
+<div class="crystal-small"></div>
+</div>
+<div class="suncatcher">
+<div class="chain" style="height:120px"></div>
+<div class="crystal"></div>
+<div class="crystal-small"></div>
+</div>
+<span class="light"></span><span class="light"></span><span class="light"></span>
+<span class="prism"></span><span class="prism"></span><span class="prism"></span><span class="prism"></span>
+</div>
+<style>
+.suncatchers{
+position:fixed;
+z-index:20;
+top:0;
+left:0;
+width:100%;
+height:280px;
+overflow:visible;
+background:transparent;
+pointer-events:none;
+}
+.suncatchers .suncatcher{
+position:absolute;
+top:0;
+transform-origin:top center;
+animation:swing 5s ease-in-out infinite;
+z-index:21;
+will-change:transform;
+}
+.suncatchers .suncatcher:nth-child(1){
+left:calc(var(--suncatcher-left-anchor) - 35px);
+animation-delay:-1s;
+}
+.suncatchers .suncatcher:nth-child(2){
+left:calc(var(--suncatcher-right-anchor) - 35px);
+animation-delay:-4s;
+}
+.suncatchers .chain{
+position:relative;
+width:7px;
+margin:auto;
+background:repeating-linear-gradient(to bottom,transparent 0 2px,#d8d3bd 2px 3px,#fff7c9 3px 4px,#aaa58f 4px 5px,transparent 5px 7px);
+filter:drop-shadow(0 0 2px rgba(255,225,120,.8));
+z-index:22;
+}
+.suncatchers .chain:after{
+content:"";
+position:absolute;
+left:2px;
+top:0;
+width:3px;
+height:100%;
+background:repeating-linear-gradient(to bottom,rgba(255,255,255,.9) 0 1px,transparent 1px 5px);
+}
+.suncatchers .crystal{
+position:relative;
+width:58px;
+height:58px;
+margin:0 auto;
+transform:rotate(45deg);
+background:linear-gradient(135deg,rgba(255,255,255,.95),rgba(255,220,240,.55),rgba(170,230,255,.45),rgba(255,255,255,.9));
+box-shadow:0 0 12px rgba(255,255,255,.9),0 0 25px rgba(255,220,180,.65),0 0 45px rgba(180,220,255,.35);
+animation:sparkle 3s ease-in-out infinite;
+z-index:23;
+will-change:transform,opacity,filter;
+}
+.suncatchers .crystal:before{
+content:"";
+position:absolute;
+inset:8px;
+background:linear-gradient(135deg,rgba(255,255,255,.45),transparent 45%,rgba(255,255,255,.35));
+}
+.suncatchers .crystal:after{
+content:"";
+position:absolute;
+inset:0;
+background:linear-gradient(135deg,transparent 35%,rgba(255,255,255,.55) 50%,transparent 65%);
+opacity:.7;
+}
+.suncatchers .crystal-small{
+width:20px;
+height:20px;
+margin:22px auto 0;
+transform:rotate(45deg);
+background:linear-gradient(135deg,rgba(255,255,255,.95),rgba(150,220,255,.55),rgba(255,190,220,.6));
+box-shadow:0 0 12px rgba(255,255,255,.9),0 0 25px rgba(190,220,255,.7);
+}
+.suncatchers .light{
+position:absolute;
+width:6px;
+height:6px;
+border-radius:50%;
+background:white;
+box-shadow:0 0 7px white,0 0 15px #ffe7a8,0 0 25px #bdefff;
+animation:floatLight 4s ease-in-out infinite;
+will-change:transform,opacity;
+}
+.suncatchers .light:nth-child(3){
+left:calc(var(--suncatcher-left-anchor) + 12px);
+top:140px;
+}
+.suncatchers .light:nth-child(4){
+left:calc(var(--suncatcher-right-anchor) - 10px);
+top:190px;
+animation-delay:-2s;
+}
+.suncatchers .light:nth-child(5){
+left:calc(var(--suncatcher-left-anchor) - 10px);
+top:120px;
+animation-delay:-1s;
+}
+.suncatchers .prism{
+position:absolute;
+width:48px;
+height:42px;
+opacity:0;
+pointer-events:none;
+animation:prismFlash 9s ease-in-out infinite;
+z-index:24;
+will-change:transform,opacity;
+}
+.suncatchers .prism:before{
+content:"";
+position:absolute;
+left:0;
+top:0;
+width:0;
+height:0;
+border-top:21px solid transparent;
+border-bottom:21px solid transparent;
+border-left:44px solid rgba(255,255,255,.08);
+filter:drop-shadow(0 0 3px rgba(255,255,255,.7));
+}
+.suncatchers .prism:after{
+content:"";
+position:absolute;
+left:3px;
+top:2px;
+width:40px;
+height:38px;
+background:linear-gradient(145deg,transparent 15%,rgba(255,80,150,.6) 25%,rgba(255,225,70,.55) 45%,rgba(80,220,255,.6) 65%,transparent 82%);
+clip-path:polygon(0 0,100% 50%,0 100%);
+filter:blur(.7px);
+}
+.suncatchers .prism:nth-child(6){
+left:calc(var(--suncatcher-left-anchor) - 24px);
+top:75px;
+animation-delay:-2s;
+}
+.suncatchers .prism:nth-child(7){
+left:calc(var(--suncatcher-right-anchor) - 22px);
+top:55px;
+animation-delay:-5s;
+}
+.suncatchers .prism:nth-child(8){
+left:calc(var(--suncatcher-right-anchor) - 18px);
+top:175px;
+animation-delay:-7s;
+}
+.suncatchers .prism:nth-child(9){
+left:calc(var(--suncatcher-left-anchor) - 30px);
+top:210px;
+animation-delay:-3.5s;
+}
+.suncatchers .prism:nth-child(9):after{
+background:linear-gradient(145deg,transparent 12%,rgba(255,75,135,.58) 25%,rgba(255,220,65,.58) 45%,rgba(70,215,255,.65) 68%,transparent 86%);
+}
+.magic-glow{
+position:absolute;
+top:calc(7px + 26px + 66px - 13px - 17.5px);
+left:50%;
+bottom:auto;
+transform:translateX(-50%);
+width:140px;
+height:35px;
+background:radial-gradient(ellipse at center,rgba(var(--magic-glow-complement),.85) 0%,rgba(var(--magic-glow-complement),.4) 45%,rgba(var(--magic-glow-complement),0) 75%),radial-gradient(ellipse at center,rgba(var(--magic-glow-color),.6) 0%,rgba(255,255,255,.5) 50%,rgba(255,255,255,0) 80%);
+border-radius:50%;
+pointer-events:none;
+z-index:1;
+filter:blur(3px);
+opacity:.85;
+}
+.magic-particles{
+position:absolute;
+top:62px;
+left:50%;
+width:1px;
+height:1px;
+z-index:25;
+pointer-events:none;
+overflow:visible;
+}
+.magic-particle{
+position:absolute;
+left:0;
+top:0;
+width:9px;
+height:9px;
+opacity:0;
+transform:translate(0,0) scale(.6);
+will-change:transform,opacity;
+contain:layout paint;
+}
+.magic-particle svg{width:100%;height:100%;display:block;overflow:visible}
+.magic-particle.run{animation:magicParticleSpew 1.8s ease-out forwards}
+@keyframes magicParticleSpew{
+0%{opacity:0;transform:translate(0,0) scale(.6)}
+25%{opacity:.8;transform:translate(var(--start-x),var(--start-y)) scale(1.3)}
+60%{opacity:.6;transform:translate(var(--mid-x),var(--mid-y)) scale(1)}
+100%{opacity:0;transform:translate(var(--end-x),var(--end-y)) scale(.5)}
+}
+.cauldron-container{
+display:flex;
+flex-direction:column;
+align-items:center;
+margin-bottom:12px;
+position:relative;
+padding-top:3px;
+width:100%;
+max-width:100%;
+min-width:0;
+}
+.cauldron-wrapper{
+position:relative;
+padding:7px 7px 3px;
+display:flex;
+flex-direction:column;
+align-items:center;
+transform-origin:center top;
+}
+.cauldron-rim{
+width:100px;
+height:26px;
+background:linear-gradient(to bottom,#f39c12,#d35400);
+border-radius:50%;
+border:2px solid #78281f;
+z-index:10;
+position:relative;
+box-shadow:inset 0 2px 4px rgba(255,255,255,.5),0 3px 6px rgba(0,0,0,.2);
+overflow:hidden;
+}
+.liquid-surface{
+position:absolute;
+top:3px;
+left:4px;
+right:4px;
+bottom:3px;
+background:linear-gradient(180deg,#ff3b38 0%,#fd0100 45%,#c90000 100%);
+border-radius:50%;
+box-shadow:inset 0 2px 4px rgba(255,255,255,.4),inset 0 -2px 4px rgba(0,0,0,.5);
+overflow:hidden;
+z-index:1;
+}
+.liquid-surface::before{
+content:"";
+position:absolute;
+top:-7px;
+left:-15%;
+width:130%;
+height:20px;
+background:rgba(255,255,255,.18);
+border-radius:50%;
+filter:blur(1px);
+animation:liquidSurface 2.2s ease-in-out infinite;
+}
+.liquid-surface::after{
+content:"";
+position:absolute;
+top:-4px;
+left:-30%;
+width:160%;
+height:16px;
+background:rgba(255,255,255,.1);
+border-radius:50%;
+animation:liquidWave 1.8s ease-in-out infinite;
+}
+.bubble-container{
+position:absolute;
+top:2px;
+left:2px;
+right:2px;
+bottom:2px;
+pointer-events:none;
+z-index:2;
+overflow:hidden;
+border-radius:50%;
+clip-path:ellipse(47% 45% at 50% 50%);
+}
+.bubble{
+position:absolute;
+bottom:0;
+width:3px;
+height:3px;
+background:rgba(255,255,255,.95);
+border:.5px solid #fff;
+border-radius:50%;
+animation:bubbleUp linear infinite;
+box-shadow:0 0 1.5px rgba(255,255,255,.8);
+}
+.cauldron-body{
+position:relative;
+width:98px;
+height:66px;
+background:linear-gradient(135deg,#f1c40f 0%,#d4ac0d 40%,#9a7d0a 100%);
+border-radius:0 0 49px 49px;
+border:3px solid #78281f;
+margin-top:-13px;
+z-index:1;
+box-shadow:0 7px 14px rgba(0,0,0,.3),inset 0 -9px 12px rgba(0,0,0,.3);
+}
+.color-preview-text{
+margin-top:8px;
+font-weight:bold;
+color:#2c3e50;
+text-align:center;
+font-size:1rem;
+max-width:100%;
+overflow-wrap:anywhere;
+}
+.sparkle-effect{
+position:absolute;
+top:9px;
+left:50%;
+width:0;
+height:0;
+pointer-events:none;
+z-index:20;
+opacity:0;
+}
+.sparkle-effect.animating{animation:fireworkBurst 1.2s cubic-bezier(.1,.8,.2,1) forwards}
+.sparkle-star,.sparkle-dot{position:absolute}
+.sparkle-star{clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)}
+.sparkle-dot{border-radius:50%}
+.s1{width:14px;height:14px;transform:translate(-50px,-40px);background:#ff69b4;box-shadow:0 0 7px #ff69b4}
+.s2{width:3px;height:3px;transform:translate(-30px,-70px);background:#ffe600;box-shadow:0 0 4px #ffe600}
+.s3{width:13px;height:13px;transform:translate(30px,-60px);background:#00e5ff;box-shadow:0 0 7px #00e5ff}
+.s4{width:3px;height:3px;transform:translate(60px,-35px);background:#ff4081;box-shadow:0 0 4px #ff4081}
+.s5{width:16px;height:16px;transform:translate(0,-80px);background:#fff;box-shadow:0 0 9px #fff}
+.s6{width:4px;height:4px;transform:translate(-70px,-15px);background:#fff59d;box-shadow:0 0 4px #fff59d}
+.s7{width:3px;height:3px;transform:translate(80px,-10px);background:#80d8ff;box-shadow:0 0 4px #80d8ff}
+.s8{width:4px;height:4px;transform:translate(-45px,10px);background:#ea80fc;box-shadow:0 0 4px #ea80fc}
+.s9{width:3px;height:3px;transform:translate(55px,15px);background:#fff;box-shadow:0 0 4px #fff}
+.s10{width:4px;height:4px;transform:translate(-15px,-90px);background:#ffcc80;box-shadow:0 0 4px #ffcc80}
+.s11{width:13px;height:13px;transform:translate(-75px,-50px);background:#ffd700;box-shadow:0 0 9px #ffd700}
+.s12{width:12px;height:12px;transform:translate(70px,-55px);background:#ffaa00;box-shadow:0 0 8px #ffaa00}
+.s13{width:3px;height:3px;transform:translate(15px,-45px);background:#ffea79;box-shadow:0 0 5px #ffea79}
+.s14{width:14px;height:14px;transform:translate(45px,-20px);background:#ffe135;box-shadow:0 0 9px #ffe135}
+.s15{width:3px;height:3px;transform:translate(-60px,-75px);background:#ffd700;box-shadow:0 0 5px #ffd700}
+.s16{width:15px;height:15px;transform:translate(-85px,-30px);background:#00ffff;box-shadow:0 0 9px #00ffff}
+.s17{width:4px;height:4px;transform:translate(-95px,-60px);background:#fff;box-shadow:0 0 5px #fff}
+.s18{width:12px;height:12px;transform:translate(-60px,-20px);background:#ff80df;box-shadow:0 0 7px #ff80df}
+.s19{width:3px;height:3px;transform:translate(-80px,5px);background:#ffff80;box-shadow:0 0 4px #ffff80}
+.s20{width:5px;height:5px;transform:translate(-105px,-40px);background:#ff9900;box-shadow:0 0 6px #ff9900}
+@keyframes liquidSurface{0%{transform:translateX(-5%) rotate(-2deg)}50%{transform:translateX(5%) rotate(2deg)}100%{transform:translateX(-5%) rotate(-2deg)}}
+@keyframes liquidWave{0%{transform:translateX(8%) scaleY(.8)}50%{transform:translateX(-8%) scaleY(1.2)}100%{transform:translateX(8%) scaleY(.8)}}
+@keyframes bubbleUp{
+0%{transform:translateY(10px) scale(.3);opacity:0}
+25%{opacity:.9;transform:translateY(6px) scale(.7)}
+70%{opacity:.7;transform:translateY(var(--random-y,-8px)) scale(var(--random-scale,1))}
+85%{opacity:.3;transform:translateY(calc(var(--random-y,-8px) - 3px)) scale(calc(var(--random-scale,1)*.6))}
+100%{transform:translateY(calc(var(--random-y,-8px) - 5px)) scale(0);opacity:0}
+}
+@keyframes fireworkBurst{0%{opacity:0;transform:scale(.1)}20%{opacity:1;transform:scale(.9)}100%{opacity:0;transform:scale(1.8)}}
+@keyframes swing{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+@keyframes sparkle{0%,100%{opacity:.65;filter:brightness(1)}50%{opacity:1;filter:brightness(1.5)}}
+@keyframes floatLight{0%,100%{transform:translateY(0) scale(.7);opacity:.2}50%{transform:translateY(-20px) scale(1.2);opacity:.9}}
+@keyframes prismFlash{
+0%,65%,100%{opacity:0;transform:scale(.4) rotate(0)}
+70%{opacity:.12}
+75%{opacity:.7;transform:scale(1) rotate(8deg)}
+82%{opacity:.35;transform:scale(.8) rotate(-5deg)}
+88%{opacity:0;transform:scale(.4) rotate(3deg)}
+}
+@media(max-width:900px){
+:root{--content-width:min(820px,calc(100% - 24px))}
+.content{width:var(--content-width);max-width:var(--content-width)}
+}
+@media(max-width:700px){
+body{--page-side:10px}
+:root{--content-width:calc(100% - 20px)}
+.content{width:var(--content-width);max-width:var(--content-width)}
+.title-plate{padding-left:10px;padding-right:10px}
+.box{padding:clamp(10px,2.5vw,14px)}
+.input-group{gap:6px}
+.cauldron-wrapper{transform:scale(.92)}
+.result-area{font-size:clamp(.72rem,2.1vw,.95rem)}
+}
+@media(max-width:500px){
+:root{--content-width:calc(100% - 20px)}
+.content{
+width:var(--content-width);
+max-width:var(--content-width);
+margin-left:auto;
+margin-right:auto;
+}
+.content>.box{
+width:100%;
+max-width:100%;
+}
+.title-plate{gap:5px}
+.title-plate h1{font-size:.88rem}
+.title-plate .subtitle{font-size:.62rem}
+.input-group{gap:5px}
+.input-group label{font-size:.82rem}
+.input-group input[type=text]{width:68px;flex-basis:68px;padding:7px 4px;font-size:1rem}
+.input-group button{padding:7px 10px;font-size:.82rem}
+.cauldron-wrapper{transform:scale(.78);margin-bottom:-15px}
+.result-title-container{gap:6px}
+.result-area{width:100%;max-width:100%;min-width:0}
+}
+@media(max-width:360px){
+:root{--content-width:calc(100% - 16px)}
+.content{
+width:var(--content-width);
+max-width:var(--content-width);
+margin-left:auto;
+margin-right:auto;
+}
+.title-plate{
+width:fit-content;
+max-width:100%;
+}
+.title-plate h1{font-size:.78rem}
+.title-plate .subtitle{font-size:.58rem}
+.input-group{flex-wrap:nowrap}
+.input-group label{font-size:.7rem;overflow:hidden;text-overflow:ellipsis}
+.input-group input[type=text]{width:58px;flex-basis:58px}
+.input-group button{padding:6px 8px}
+.cauldron-wrapper{transform:scale(.7);margin-bottom:-25px}
+}
+@media(min-width:1200px){
+:root{--content-width:min(820px,calc(100% - 38px))}
+.content{width:var(--content-width);max-width:var(--content-width)}
+}
+@media screen and (max-width:900px) and (orientation:portrait){
+.suncatchers .suncatcher:nth-child(1){
+left:calc(var(--suncatcher-left-anchor) - 12px - 6px - 1ch);
+}
+.suncatchers .suncatcher:nth-child(2){
+left:calc(var(--suncatcher-right-anchor) - 46px + 2ch);
+}
+.suncatchers .suncatcher:nth-child(2) .crystal{
+width:52px;
+height:52px;
+}
+.suncatchers .suncatcher:nth-child(2) .crystal-small{
+width:18px;
+height:18px;
+margin-top:20px;
+}
+.suncatchers .suncatcher:nth-child(2) .chain{
+width:7px;
+}
+.suncatchers .prism:nth-child(6){
+left:calc(var(--suncatcher-left-anchor) - 36px);
+top:50px;
+}
+.suncatchers .prism:nth-child(7){
+left:calc(var(--suncatcher-right-anchor) - 5px);
+top:52px;
+}
+.suncatchers .prism:nth-child(8){
+left:calc(var(--suncatcher-right-anchor) - 5px);
+top:205px;
+}
+.suncatchers .prism:nth-child(9){
+left:calc(var(--suncatcher-left-anchor) - 25px);
+top:210px;
+}
+.suncatchers .light:nth-child(3){
+left:calc(var(--suncatcher-left-anchor) + 12px);
+top:140px;
+}
+.suncatchers .light:nth-child(4){
+left:calc(var(--suncatcher-right-anchor) + 28px + 1ch);
+top:218px;
+}
+.suncatchers .light:nth-child(5){
+left:calc(var(--suncatcher-left-anchor) - 4px);
+top:120px;
+}
+}
+@media screen and (min-width:701px) and (orientation:landscape){
+.suncatchers .suncatcher:nth-child(1){
+left:calc(var(--suncatcher-left-anchor) - 23px);
+}
+.suncatchers .suncatcher:nth-child(2){
+left:calc(var(--suncatcher-right-anchor) - 47px);
+}
+.suncatchers .prism:nth-child(6){
+left:calc(var(--suncatcher-left-anchor) + 34px);
+top:88px;
+}
+.suncatchers .prism:nth-child(7){
+left:calc(var(--suncatcher-right-anchor) - 30px);
+top:82px;
+}
+.suncatchers .prism:nth-child(8){
+left:calc(var(--suncatcher-right-anchor) + 8px);
+top:172px;
+}
+.suncatchers .prism:nth-child(9){
+left:calc(var(--suncatcher-left-anchor) + 60px);
+top:188px;
+}
+.suncatchers .light:nth-child(3){
+left:calc(var(--suncatcher-left-anchor) + 46px);
+top:132px;
+}
+.suncatchers .light:nth-child(4){
+left:calc(var(--suncatcher-right-anchor) + 8px);
+top:192px;
+}
+.suncatchers .light:nth-child(5){
+left:calc(var(--suncatcher-left-anchor) + 34px);
+top:118px;
+}
+}
+@media screen and (min-width:701px) and (orientation:landscape) and (max-height:700px){
+.suncatchers{height:250px}
+.suncatchers .prism:nth-child(6){top:72px}
+.suncatchers .prism:nth-child(7){top:70px}
+.suncatchers .prism:nth-child(8){top:145px}
+.suncatchers .prism:nth-child(9){top:172px}
+}
+@media(prefers-reduced-motion:reduce){
+*,*::before,*::after{
+animation-duration:.001ms!important;
+animation-iteration-count:1!important;
+transition-duration:.001ms!important;
+scroll-behavior:auto!important
+}
+}
+</style>
+<script>
+const baseGems=[
+{ja:"ルビー",en:"Ruby",num:38},{ja:"ガーネット",en:"Garnet",num:39},{ja:"レッドアゲート",en:"Red Agate",num:40},{ja:"トパーズ",en:"Topaz",num:41},
+{ja:"シトリン",en:"Citrine",num:42},{ja:"ペリドット",en:"Peridot",num:43},{ja:"エメラルド",en:"Emerald",num:44},{ja:"ベリル",en:"Beryl",num:45},
+{ja:"アクアマリン",en:"Aquamarine",num:46},{ja:"ジルコン",en:"Zircon",num:47},{ja:"サファイア",en:"Sapphire",num:48},{ja:"ラピスラズリ",en:"Lapis Lapis",num:49},
+{ja:"オニキス",en:"Onyx",num:50},{ja:"アメシスト",en:"Amethyst",num:51},{ja:"ローズクォーツ",en:"Rose Quartz",num:52},{ja:"トリマリン",en:"Tourmaline",num:53}
+];
+const gemNamesEn={
+"ダイヤモンド":"Diamond","パール":"Pearl","サンストーン":"Sunstone","ムーンストーン":"Moonstone","オブシディアン":"Obsidian"
+};
+const combinationMap={
+38:{40:39,41:39,42:40,43:40,44:41,45:41,46:50,47:51,48:51,49:52,50:52,51:53,52:53},
+39:{41:40,42:40,43:41,44:41,45:42,46:42,47:51,48:52,49:52,50:53,51:53,52:38,53:38},
+40:{38:39,42:41,43:41,44:42,45:42,46:43,47:43,48:52,49:53,50:53,51:38,52:38,53:39},
+41:{38:40,39:40,43:42,44:42,45:43,46:43,47:44,48:44,49:53,50:38,51:38,52:39,53:39},
+42:{38:40,39:41,40:41,44:43,45:43,46:44,47:44,48:45,49:45,50:38,51:39,52:39,53:40},
+43:{38:41,39:41,40:42,41:42,45:44,46:44,47:45,48:45,49:46,50:46,51:39,52:40,53:40},
+44:{38:41,39:42,40:42,41:43,42:43,46:45,47:45,48:46,49:46,50:47,51:47,52:40,53:41},
+45:{38:42,39:42,40:43,41:43,42:44,43:44,47:46,48:46,49:47,50:47,51:48,52:48,53:41},
+46:{38:42,39:43,40:43,41:44,42:44,43:45,44:45,48:47,49:47,50:48,51:48,52:49,53:49},
+47:{38:50,39:43,40:44,41:44,42:45,43:45,44:46,45:46,49:48,50:48,51:49,52:49,53:50},
+48:{38:51,39:51,40:44,41:45,42:45,43:46,44:46,45:47,46:47,50:49,51:49,52:50,53:50},
+49:{38:51,39:52,40:52,41:45,42:46,43:46,44:47,45:47,46:48,47:48,51:50,52:50,53:51},
+50:{38:52,39:52,40:53,41:53,42:46,43:47,44:47,45:48,46:48,47:49,48:49,52:51,53:51},
+51:{38:52,39:53,40:53,41:38,42:38,43:47,44:48,45:48,46:49,47:49,48:50,49:50,53:52},
+52:{38:53,39:53,40:38,41:38,42:39,43:39,44:48,45:49,46:49,47:50,48:50,49:51,50:51},
+53:{39:38,40:38,41:39,42:39,43:40,44:40,45:49,46:50,47:50,48:51,49:51,50:52,51:52}
+};
+const exactPalette={
+1:"#FFFFFF",2:"#C0C0C0",3:"#808080",4:"#3F4140",5:"#000000",6:"#F7B2AD",7:"#F7C9B1",8:"#FADBAF",9:"#F9ECA8",10:"#F5FEA8",
+11:"#D9FEB0",12:"#A8FDAC",13:"#B3FFD8",14:"#B0FEFE",15:"#B3ECFD",16:"#ABDAF6",17:"#ADC5F5",18:"#B6B4FF",19:"#D5B1F7",20:"#F8B2FA",
+21:"#F9B2D2",22:"#FB665F",23:"#FF9A64",24:"#FDB465",25:"#FCD961",26:"#FDFF66",27:"#B0FF65",28:"#61FD5C",29:"#60FEAA",30:"#62FFF6",
+31:"#63D9FD",32:"#65B3FE",33:"#648CFD",34:"#6665FE",35:"#AA66F9",36:"#FC65FE",37:"#FE66B3",38:"#FD0100",39:"#F45201",40:"#F67F00",
+41:"#F5BE00",42:"#FFFF00",43:"#7BFD00",44:"#00FE00",45:"#00FE81",46:"#00FFFF",47:"#00C0FD",48:"#0080FF",49:"#0041FE",50:"#0001FC",
+51:"#7E00FE",52:"#FD00FB",53:"#FE0180",54:"#990100",55:"#993400",56:"#974E00",57:"#987300",58:"#979B00",59:"#4B9A00",60:"#009900",
+61:"#009845",62:"#009898",63:"#007397",64:"#004E99",65:"#002697",66:"#000097",67:"#4B0097",68:"#970099",69:"#98004D",70:"#4C0100",
+71:"#451900",72:"#451900",73:"#4B2800",74:"#4A3A00",75:"#244D00",76:"#004C00",77:"#004C28",78:"#004D4D",79:"#003944",80:"#00274D",
+81:"#00154C",82:"#00014C",83:"#25004A",84:"#4A004D",85:"#4B0026"
+};
+function formatGem(name){
+let enName=gemNamesEn[name];
+if(!enName){
+const found=baseGems.find(g=>g.ja===name);
+if(found)enName=found.en;
+}
+return enName?`${name}(${enName})`:name;
+}
+function getColorHex(target){return exactPalette[target]||"#cccccc"}
+function hexToRgb(hex){
+let c=hex.replace("#","");
+if(c.length===3)c=c.split("").map(x=>x+x).join("");
+const n=parseInt(c,16);
+return{r:n>>16&255,g:n>>8&255,b:n&255};
+}
+function makeLightColor(hex){
+const{r,g,b}=hexToRgb(hex);
+return`rgb(${Math.min(255,r+90)},${Math.min(255,g+90)},${Math.min(255,b+90)})`;
+}
+function makeDarkColor(hex){
+const{r,g,b}=hexToRgb(hex);
+return`rgb(${Math.max(0,r-70)},${Math.max(0,g-70)},${Math.max(0,b-70)})`;
+}
+function makeShadowColor(hex){
+const{r,g,b}=hexToRgb(hex);
+return`rgb(${Math.max(0,r-120)},${Math.max(0,g-120)},${Math.max(0,b-120)})`;
+}
+function makeTipColor(hex){
+const{r,g,b}=hexToRgb(hex);
+return`rgb(${Math.floor((r+150)/2)},${Math.floor((g+160)/2)},${Math.floor((b+170)/2)})`;
+}
+function rgbToHsl(r,g,b){
+r/=255;g/=255;b/=255;
+const max=Math.max(r,g,b),min=Math.min(r,g,b);
+let h=0,s=0,l=(max+min)/2;
+if(max!==min){
+const d=max-min;
+s=l>.5?d/(2-max-min):d/(max+min);
+switch(max){
+case r:h=(g-b)/d+(g<b?6:0);break;
+case g:h=(b-r)/d+2;break;
+case b:h=(r-g)/d+4;break;
+}
+h/=6;
+}
+return[h,s,l];
+}
+function hslToRgb(h,s,l){
+let r,g,b;
+if(s===0)r=g=b=l;
+else{
+const hue2rgb=(p,q,t)=>{
+if(t<0)t+=1;
+if(t>1)t-=1;
+if(t<1/6)return p+(q-p)*6*t;
+if(t<1/2)return q;
+if(t<2/3)return p+(q-p)*(2/3-t)*6;
+return p;
+};
+const q=l<.5?l*(1+s):l+s-l*s,p=2*l-q;
+r=hue2rgb(p,q,h+1/3);
+g=hue2rgb(p,q,h);
+b=hue2rgb(p,q,h-1/3);
+}
+return`${Math.round(r*255)},${Math.round(g*255)},${Math.round(b*255)}`;
+}
+function getVibrantComplementRgb(r,g,b){
+if(r>220&&g<80&&b<80)return"45,205,65";
+const[h]=rgbToHsl(r,g,b);
+return hslToRgb((h+.5)%1,.9,.43);
+}
+function updateCauldronVisual(target){
+const hexColor=getColorHex(target);
+const{r,g,b}=hexToRgb(hexColor);
+const vibrantComp=getVibrantComplementRgb(r,g,b);
+const root=document.documentElement;
+const magicGlow=document.getElementById("magicGlow");
+root.style.setProperty("--diamond-color-rgb",`${r},${g},${b}`);
+if(target>=1&&target<=5){
+root.style.setProperty("--magic-glow-color","173,189,204");
+root.style.setProperty("--magic-glow-complement","82,66,51");
+}else if(target>=70&&target<=85){
+root.style.setProperty("--magic-glow-color",`${Math.min(255,Math.floor(r*1.05+25))},${Math.min(255,Math.floor(g*1.05+25))},${Math.min(255,Math.floor(b*1.05+25))}`);
+root.style.setProperty("--magic-glow-complement",vibrantComp);
+}else{
+root.style.setProperty("--magic-glow-color",`${r},${g},${b}`);
+root.style.setProperty("--magic-glow-complement",vibrantComp);
+}
+magicGlow.style.opacity=target>=70&&target<=85?"1":".85";
+root.style.setProperty("--diamond-color",hexColor);
+root.style.setProperty("--diamond-light",makeLightColor(hexColor));
+root.style.setProperty("--diamond-dark",makeDarkColor(hexColor));
+root.style.setProperty("--diamond-shadow",makeShadowColor(hexColor));
+root.style.setProperty("--diamond-tip",makeTipColor(hexColor));
+}
+function updateBaseGemDiamond(target,gemName){
+const baseGemInline=document.getElementById("baseGemInline");
+const nameElem=baseGemInline?.querySelector(".base-gem-name");
+if(!baseGemInline||!nameElem)return;
+if(target>=6&&target<=85){
+baseGemInline.classList.add("active");
+nameElem.textContent=gemName;
+}else{
+baseGemInline.classList.remove("active");
+nameElem.textContent="";
+}
+}
+function insertBaseGemIntoResult(resultDiv){
+const marker="@@BASE_GEM@@";
+const baseGemInline=document.getElementById("baseGemInline");
+if(!baseGemInline||!baseGemInline.classList.contains("active"))return;
+const walker=document.createTreeWalker(resultDiv,NodeFilter.SHOW_TEXT);
+let node;
+while(node=walker.nextNode()){
+const index=node.nodeValue.indexOf(marker);
+if(index<0)continue;
+const before=document.createTextNode(node.nodeValue.slice(0,index));
+const after=document.createTextNode(node.nodeValue.slice(index+marker.length));
+const inline=document.createElement("span");
+inline.className="result-base-gem-inline";
+const svg=document.getElementById("diamondSvg").cloneNode(true);
+svg.id="resultBaseGemDiamondSvg";
+
+const baseDiamondTarget=38+((lastValidTarget-6)%16);
+const baseDiamondHex=getColorHex(baseDiamondTarget);
+
+inline.style.setProperty("--diamond-color",baseDiamondHex);
+inline.style.setProperty("--diamond-color-rgb",`${hexToRgb(baseDiamondHex).r},${hexToRgb(baseDiamondHex).g},${hexToRgb(baseDiamondHex).b}`);
+inline.style.setProperty("--diamond-light",makeLightColor(baseDiamondHex));
+inline.style.setProperty("--diamond-dark",makeDarkColor(baseDiamondHex));
+inline.style.setProperty("--diamond-shadow",makeShadowColor(baseDiamondHex));
+inline.style.setProperty("--diamond-tip",makeTipColor(baseDiamondHex));
+
+inline.appendChild(svg);
+node.parentNode.insertBefore(before,node);
+node.parentNode.insertBefore(inline,node);
+node.parentNode.insertBefore(after,node);
+node.remove();
+break;
+}
+}
+function triggerSparkle(){
+const el=document.getElementById("sparkleEffect");
+if(!el)return;
+el.classList.remove("animating");
+void el.offsetWidth;
+el.classList.add("animating");
+}
+function initBubbles(){
+const container=document.getElementById("bubbleContainer");
+if(!container)return;
+container.innerHTML="";
+for(let i=0;i<7;i++){
+const bubble=document.createElement("div");
+bubble.className="bubble";
+const size=2+Math.random()*1.5;
+const duration=1+Math.random()*.8;
+bubble.style.left=`${15+Math.random()*70}%`;
+bubble.style.width=`${size}px`;
+bubble.style.height=`${size}px`;
+bubble.style.animationDuration=`${duration}s`;
+bubble.style.animationDelay=`${-Math.random()*duration}s`;
+bubble.style.setProperty("--random-y",`${-7-Math.random()*4}px`);
+bubble.style.setProperty("--random-scale",.7+Math.random()*.3);
+container.appendChild(bubble);
+}
+}
+function createMagicParticleSvg(){
+return`<svg viewBox="0 0 700 700" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;overflow:visible">
+<defs><linearGradient id="particleGradient" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="currentColor" stop-opacity=".62"/><stop offset=".2" stop-color="currentColor" stop-opacity=".78"/><stop offset=".5" stop-color="currentColor" stop-opacity=".98"/><stop offset=".75" stop-color="currentColor" stop-opacity=".82"/><stop offset="1" stop-color="currentColor" stop-opacity=".6"/></linearGradient></defs>
+<g stroke="currentColor" stroke-opacity=".7"><g id="hex">
+<path d="M350 18L392 52L411 101L405 365L384 414L350 474L316 414L295 365L289 101L308 52Z" fill="url(#particleGradient)" stroke-width="5"/>
+<path d="M350 18L308 52L289 101L350 126Z" fill="#fff" fill-opacity=".9" stroke-width="3"/>
+<path d="M350 18L392 52L411 101L350 126Z" fill="currentColor" fill-opacity=".75" stroke-width="3"/>
+<path d="M350 126L350 365L316 414L295 365L289 101Z" fill="#fff" fill-opacity=".68" stroke="none"/>
+<path d="M350 126L405 103L405 365L384 414L350 365Z" fill="currentColor" fill-opacity=".58" stroke="none"/>
+<path d="M316 414L350 365L350 474Z" fill="#fff" fill-opacity=".9" stroke="none"/>
+<path d="M350 365L384 414L350 474Z" fill="currentColor" fill-opacity=".55" stroke="none"/>
+<path d="M326 143L340 147L336 354L322 398Z" fill="#fff" fill-opacity=".72" stroke="none"/>
+<path d="M350 18L350 126L350 365L350 474" fill="none" stroke="#fff" stroke-width="3" stroke-opacity=".9"/>
+<path d="M308 52L350 18L392 52" fill="none" stroke="#fff" stroke-width="4" stroke-opacity=".92"/>
+<path d="M289 101L350 126L411 101" fill="none" stroke="#fff" stroke-width="3" stroke-opacity=".82"/>
+<path d="M316 414L350 365L384 414" fill="none" stroke="#fff" stroke-width="3" stroke-opacity=".78"/>
+</g>
+<use href="#hex" transform="rotate(60 350 350)"/><use href="#hex" transform="rotate(120 350 350)"/><use href="#hex" transform="rotate(180 350 350)"/><use href="#hex" transform="rotate(240 350 350)"/><use href="#hex" transform="rotate(300 350 350)"/>
+</g></svg>`;
+}
+let magicParticlesReady=false;
+function initMagicParticles(){
+if(magicParticlesReady)return;
+const container=document.getElementById("magicParticles");
+if(!container)return;
+const fragment=document.createDocumentFragment();
+for(let i=1;i<=36;i++){
+const spot=document.createElement("div");
+spot.className="magic-particle";
+spot.style.width=`${(Math.random()*2+3)*2+2}px`;
+spot.style.height=spot.style.width;
+const right=i%2===0;
+const finalX=right?-10-Math.random()*20:10+Math.random()*20;
+const finalY=-90-Math.random()*50;
+spot.style.setProperty("--start-x",`${right?50+Math.random()*60:-50-Math.random()*60}px`);
+spot.style.setProperty("--start-y",`${-20-Math.random()*30}px`);
+spot.style.setProperty("--mid-x",`${finalX*.8}px`);
+spot.style.setProperty("--mid-y",`${finalY*.6}px`);
+spot.style.setProperty("--end-x",`${finalX}px`);
+spot.style.setProperty("--end-y",`${finalY}px`);
+spot.innerHTML=createMagicParticleSvg();
+fragment.appendChild(spot);
+}
+container.appendChild(fragment);
+magicParticlesReady=true;
+}
+/* 検索のたびに36個の六角柱へ、色相環全体からバランスよく色を割り当てる。
+   - 同じ色・同系色が大量に固まるのを防ぐ
+   - 36色を色相環に分散
+   - 色の割り当て順は毎回シャッフルしてランダム感を維持
+   - 彩度・明度にも少しランダム幅を持たせる
+*/
+function recolorMagicParticles(){
+  const container=document.getElementById("magicParticles");
+  if(!container)return;
+
+  const spots=[...container.querySelectorAll(".magic-particle")];
+  const count=spots.length;
+
+  if(count===0)return;
+
+  const colors=[];
+
+  // 色相を均等に分散させる。
+  // 36個なら約10度ずつ離れる。
+  const hueStep=360/count;
+
+  // 今回の検索だけで使う色相環の開始位置をランダム化。
+  // これによって毎回同じ色配置にならない。
+  const hueOffset=Math.random()*360;
+
+  for(let i=0;i<count;i++){
+
+    // 基本は約10度ずつ離す。
+    // ±2度だけ揺らして、機械的になりすぎないようにする。
+    const jitter=(Math.random()-0.5)*4;
+
+    let hue=(hueOffset + i*hueStep + jitter)%360;
+
+    if(hue<0)hue+=360;
+
+    // 鮮やかな色を維持しつつ、少しだけ個体差を出す。
+    const saturation=86+Math.floor(Math.random()*10); // 86〜95%
+    const lightness=47+Math.floor(Math.random()*11);  // 47〜57%
+
+    colors.push(
+      `hsl(${hue.toFixed(1)} ${saturation}% ${lightness}%)`
+    );
+  }
+
+  // 色そのものは分散したまま、
+  // 36個への割り当て順だけランダム化する。
+  for(let i=colors.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [colors[i],colors[j]]=[colors[j],colors[i]];
+  }
+
+  // 六角柱それぞれに別々の色を設定。
+  spots.forEach((spot,i)=>{
+    spot.style.color=colors[i];
+  });
+}
+
+function triggerMagicParticles(){
+initMagicParticles();
+recolorMagicParticles();
+const container=document.getElementById("magicParticles");
+if(!container)return;
+const spots=container.querySelectorAll(".magic-particle");
+spots.forEach((spot,i)=>{
+spot.classList.remove("run");
+spot.style.animationDelay=`${(i*.02).toFixed(2)}s`;
+});
+requestAnimationFrame(()=>requestAnimationFrame(()=>spots.forEach(spot=>spot.classList.add("run"))));
+}
+function initYoutubeLazy(){
+const container=document.getElementById("youtubeContainer");
+const placeholder=document.getElementById("youtubePlaceholder");
+if(!container||!placeholder)return;
+let loaded=false;
+const loadYoutube=()=>{
+if(loaded)return;
+loaded=true;
+const iframe=document.createElement("iframe");
+iframe.loading="lazy";
+iframe.src="https://www.youtube.com/embed/Y7aOkFx7sKw?si=G_wLbV2AmpOCHdYk&rel=0";
+iframe.title="YouTube video player";
+iframe.allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture;web-share";
+iframe.allowFullscreen=true;
+iframe.addEventListener("load",()=>{
+iframe.classList.add("ready");
+setTimeout(()=>{
+placeholder.classList.add("fade-out");
+setTimeout(()=>placeholder.classList.add("hidden"),700);
+},1000);
+},{once:true});
+container.appendChild(iframe);
+};
+if("IntersectionObserver"in window){
+const observer=new IntersectionObserver(entries=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){
+loadYoutube();
+observer.unobserve(container);
+}
+});
+},{rootMargin:"300px 0px"});
+observer.observe(container);
+}else loadYoutube();
+}
+
+let lastValidTarget=38;
+let commitSerial=0;
+let pendingCommitFrame=null;
+let responsiveSyncFrame=null;
+let responsiveResizeObserver=null;
+
+function syncResponsiveLayout(){
+if(responsiveSyncFrame!==null)return;
+responsiveSyncFrame=requestAnimationFrame(()=>{
+responsiveSyncFrame=null;
+
+const root=document.documentElement;
+const inputGroup=document.querySelector(".input-group");
+const targetInput=document.getElementById("targetColor");
+const searchButton=document.getElementById("searchButton");
+
+if(!inputGroup||!targetInput||!searchButton)return;
+
+const groupRect=inputGroup.getBoundingClientRect();
+const inputRect=targetInput.getBoundingClientRect();
+const buttonRect=searchButton.getBoundingClientRect();
+
+const viewportWidth=Math.max(
+document.documentElement.clientWidth||0,
+window.innerWidth||0,
+1
+);
+const viewportHeight=Math.max(
+document.documentElement.clientHeight||0,
+window.innerHeight||0,
+1
+);
+
+const groupLeft=Math.max(0,groupRect.left);
+const groupRight=Math.min(viewportWidth,groupRect.right);
+
+const isPortrait=window.matchMedia("(orientation: portrait)").matches;
+const isCompactPortrait=isPortrait&&viewportWidth<=900;
+
+let leftAnchor;
+let rightAnchor;
+
+if(isCompactPortrait){
+const edgeInset=Math.max(
+6,
+Math.min(
+18,
+Math.round((window.visualViewport?.width||viewportWidth)*.025)
+)
+);
+leftAnchor=edgeInset+12;
+rightAnchor=viewportWidth-edgeInset-12;
+}else{
+const sideGap=Math.max(28,Math.min(58,viewportWidth*.035));
+leftAnchor=groupLeft-sideGap+35;
+rightAnchor=groupRight+sideGap-35;
+leftAnchor=Math.max(20,Math.min(viewportWidth-20,leftAnchor));
+rightAnchor=Math.max(20,Math.min(viewportWidth-20,rightAnchor));
+}
+
+root.style.setProperty("--suncatcher-left-anchor",`${leftAnchor}px`);
+root.style.setProperty("--suncatcher-right-anchor",`${rightAnchor}px`);
+root.style.setProperty("--responsive-group-left",`${groupLeft}px`);
+root.style.setProperty("--responsive-group-right",`${groupRight}px`);
+root.style.setProperty("--responsive-viewport-height",`${viewportHeight}px`);
+root.style.setProperty("--responsive-input-left",`${inputRect.left}px`);
+root.style.setProperty("--responsive-button-right",`${buttonRect.right}px`);
+});
+}
+
+function initResponsiveLayoutObserver(){
+syncResponsiveLayout();
+
+if("ResizeObserver"in window){
+responsiveResizeObserver=new ResizeObserver(()=>{
+syncResponsiveLayout();
+});
+const content=document.querySelector(".content");
+const inputGroup=document.querySelector(".input-group");
+const titlePlate=document.querySelector(".title-plate");
+if(content)responsiveResizeObserver.observe(content);
+if(inputGroup)responsiveResizeObserver.observe(inputGroup);
+if(titlePlate)responsiveResizeObserver.observe(titlePlate);
+}
+
+window.addEventListener("resize",syncResponsiveLayout,{passive:true});
+window.addEventListener("orientationchange",syncResponsiveLayout,{passive:true});
+window.addEventListener("scroll",syncResponsiveLayout,{passive:true});
+
+if(window.visualViewport){
+window.visualViewport.addEventListener("resize",syncResponsiveLayout,{passive:true});
+window.visualViewport.addEventListener("scroll",syncResponsiveLayout,{passive:true});
+}
+
+const portraitQuery=window.matchMedia("(orientation: portrait)");
+const handleOrientationMediaChange=()=>{
+syncResponsiveLayout();
+};
+if(portraitQuery.addEventListener){
+portraitQuery.addEventListener("change",handleOrientationMediaChange);
+}else if(portraitQuery.addListener){
+portraitQuery.addListener(handleOrientationMediaChange);
+}
+}
+
+function calculateRecipe(committedRawValue){
+const inputElem=document.getElementById("targetColor");
+const resultDiv=document.getElementById("result");
+const liquidSurface=document.getElementById("liquidSurface");
+const previewText=document.getElementById("colorPreviewText");
+const rawValue=typeof committedRawValue==="string"?committedRawValue.trim():inputElem.value.trim();
+
+if(rawValue===""){
+inputElem.classList.add("error");
+return false;
+}
+
+const target=Number(rawValue);
+if(!Number.isInteger(target)||target<1||target>85){
+inputElem.classList.add("error");
+return false;
+}
+
+inputElem.classList.remove("error");
+lastValidTarget=target;
+updateCauldronVisual(target);
+
+const hexColor=getColorHex(target);
+liquidSurface.style.background=`linear-gradient(180deg,${makeLightColor(hexColor)} 0%,${hexColor} 45%,${makeDarkColor(hexColor)} 100%)`;
+previewText.textContent="";
+
+let output="";
+const d=formatGem("ダイヤモンド");
+const p=formatGem("パール");
+const ss=formatGem("サンストーン");
+const ms=formatGem("ムーンストーン");
+const obs=formatGem("オブシディアン");
+
+if(target>=1&&target<=5){
+updateBaseGemDiamond(0,"");
+const targetText=target===1?"白":target===5?"黒":String(target);
+const targetText2=target===1?"White":target===5?"black":String(target);output+=`🎼 所属エリア: 無彩色(Monochrome)（1〜5）\n`;
+output+=`38〜53の宝石のうち使った宝石の色または${targetText}ができます(The result will be either the color of the gemstone used 38–53 or ${targetText2})\n\n`;
+output+=`🪶 必要となる宝石レシピ例:\n`;
+
+if(target===1){
+output+=`・ 38〜53の宝石いずれか1個 ＞ ${d} ＞ ${p} ＞ ${ss} ＞ ${ss}\n`;
+output+=`・ 38〜53の宝石いずれか1個 ＞ ${d} ＞ ${p} ＞ ${p} ＞ ${p}\n`;
+output+=`・ 38〜53の宝石いずれか1個 ＞ ${d} ＞ ${p} ＞ ${p} ＞ ${ss}\n`;
+}else if(target===2){
+output+=`・ 38〜53の宝石いずれか1個 ＞ ${d} ＞ ${p} ＞ ${ss} ＞ ${ms}\n`;
+}else if(target===3){
+output+=`・ 38〜53の宝石いずれか1個 ＞ ${d} ＞ ${p} ＞ ${ms} ＞ ${ms}\n`;
+}else if(target===4){
+output+=`・ 38〜53の宝石いずれか1個 ＞ ${d} ＞ ${obs} ＞ ${ss} ＞ ${ms}\n`;
+}else if(target===5){
+output+=`・ 38〜53の宝石いずれか1個 ＞ ${d} ＞ ${obs} ＞ ${ms} ＞ ${ms}\n`;
+output+=`・ 38〜53の宝石いずれか1個 ＞ ${d} ＞ ${obs} ＞ ${obs} ＞ ${obs}\n`;
+output+=`・ 38〜53の宝石いずれか1個 ＞ ${d} ＞ ${obs} ＞ ${obs} ＞ ${ms}\n`;
+}
+}else{
+let zoneName="";
+if(target>=6&&target<=21)zoneName="薄色(Pastel Colors)（6〜21）";
+else if(target>=22&&target<=37)zoneName="明色(Bright Colors)（22〜37）";
+else if(target>=38&&target<=53)zoneName="原色(Vivid Colors)（38〜53）";
+else if(target>=54&&target<=69)zoneName="暗色(Dark Colors)（54〜69）";
+else if(target>=70&&target<=85)zoneName="濃色(Deep Colors)（70〜85）";
+
+let offset=target<=21?target-6:target<=37?target-22:target<=53?target-38:target<=69?target-54:target-70;
+const gemObj=baseGems[offset%16];
+const correspondingGem=`${gemObj.ja}(${gemObj.en})`;
+
+updateBaseGemDiamond(target,correspondingGem);
+
+output+=`🌈 所属エリア: ${zoneName}\n`;
+output+=`@@BASE_GEM@@ベースとなる原色宝石: 【${correspondingGem}】\n\n`;
+output+=`🪶 基本作成レシピ:\n`;
+
+if(target>=38&&target<=53){
+output+=`1. ${correspondingGem} ＞ ${correspondingGem} ＞ ${correspondingGem}\n`;
+output+=`2. ${correspondingGem} ＞ ${d}\n`;
+}else if(target>=22&&target<=37){
+output+=`1. ${correspondingGem} × 3個 ＞ ${ss}\n`;
+output+=`2. ${correspondingGem} ＞ ${ss} ＞ ${d}\n`;
+}else if(target>=6&&target<=21){
+output+=`1. ${correspondingGem} × 3個 ＞ ${ss} ＞ ${ss}\n`;
+output+=`2. ${correspondingGem} ＞ ${ss} ＞ ${ss} ＞ ${d}\n`;
+}else if(target>=54&&target<=69){
+output+=`1. ${correspondingGem} × 3個 ＞ ${ms}\n`;
+output+=`2. ${correspondingGem} ＞ ${ms} ＞ ${d}\n`;
+}else{
+output+=`1. ${correspondingGem} × 3個 ＞ ${ms} ＞ ${ms}\n`;
+output+=`2. ${correspondingGem} ＞ ${ms} ＞ ${ms} ＞ ${d}\n`;
+}
+let subs=[];
+for(const g1 of baseGems){
+if(!combinationMap[g1.num])continue;
+for(const g2 of baseGems){
+if(combinationMap[g1.num][g2.num]===gemObj.num){
+subs.push({
+g1:formatGem(g1.ja),
+g2:formatGem(g2.ja)
+});
+}
+}
+}
+if(subs.length){
+output+=`\n🏺 【${correspondingGem}】の代用を使った具体的な作成レシピ:\n`;
+output+=`（※「${correspondingGem}」の部分を、以下の2つの宝石の組み合わせで置き換えて作ることができます）\n\n`;
+
+subs.forEach((sub,idx)=>{
+const pairStr=`${sub.g1} ＞ ${sub.g2}`;
+if(target>=38&&target<=53)output+=`${idx+1}. ${pairStr} ＞ ${d}\n`;
+else if(target>=22&&target<=37)output+=`${idx+1}. ${pairStr} ＞ ${ss} ＞ ${d}\n`;
+else if(target>=6&&target<=21)output+=`${idx+1}. ${pairStr} ＞ ${ss} ＞ ${ss} ＞ ${d}\n`;
+else if(target>=54&&target<=69)output+=`${idx+1}. ${pairStr} ＞ ${ms} ＞ ${d}\n`;
+else output+=`${idx+1}. ${pairStr} ＞ ${ms} ＞ ${ms} ＞ ${d}\n`;
+});
+}
+}
+
+resultDiv.textContent=output;
+insertBaseGemIntoResult(resultDiv);
+
+requestAnimationFrame(()=>{
+triggerSparkle();
+triggerMagicParticles();
+syncResponsiveLayout();
+});
+
+return true;
+}
+
+function calculateRecipeAfterPaint(){
+const inputElem=document.getElementById("targetColor");
+if(!inputElem)return;
+
+const committedRawValue=inputElem.value.trim();
+const commitId=++commitSerial;
+
+if(pendingCommitFrame!==null){
+cancelAnimationFrame(pendingCommitFrame);
+pendingCommitFrame=null;
+}
+
+const targetAtCommit=Number(committedRawValue);
+
+if(committedRawValue===""||!Number.isInteger(targetAtCommit)||targetAtCommit<1||targetAtCommit>85){
+calculateRecipe(committedRawValue);
+return;
+}
+
+pendingCommitFrame=requestAnimationFrame(()=>{
+pendingCommitFrame=null;
+if(commitId!==commitSerial)return;
+calculateRecipe(committedRawValue);
+});
+}
+
+window.addEventListener("DOMContentLoaded",()=>{
+const targetColor=document.getElementById("targetColor");
+const searchButton=document.getElementById("searchButton");
+
+targetColor.addEventListener("input",()=>{
+targetColor.classList.remove("error");
+});
+
+targetColor.addEventListener("keydown",event=>{
+if(event.key==="Enter"){
+event.preventDefault();
+calculateRecipeAfterPaint();
+}
+});
+
+searchButton.addEventListener("click",event=>{
+event.preventDefault();
+calculateRecipeAfterPaint();
+});
+
+initBubbles();
+initMagicParticles();
+recolorMagicParticles();
+initYoutubeLazy();
+initResponsiveLayoutObserver();
+
+requestAnimationFrame(()=>{
+calculateRecipe(targetColor.value.trim());
+syncResponsiveLayout();
+});
+
+setTimeout(syncResponsiveLayout,120);
+setTimeout(syncResponsiveLayout,500);
+});
+</script>
+</body>
+</html>
